@@ -31,15 +31,15 @@ Borrows some great ideas from [fish shell][fish-shell], but with a zsh flair.
 
 ## Customization
 
-zebrafish has great defaults and is meant to provide you with a full-featured
-zsh setup with no special configuration beyond sourcing `zebrafish.zsh`
+zebrafish has great defaults. It's built to provide you with a full-featured
+zsh setup with no special configuration beyond sourcing `zebrafish.zsh`.
 
-However, sometimes you really do want to adjust features. These
-settings are meant to be added to your `.zshrc` prior to loading zebrafish
+However, sometimes you really do want to adjust features. These `zstyle`
+settings are available to add to your `.zshrc` prior to loading zebrafish
 if you decide you need them.
 
 ```shell
-# Leave what you want in this zstyle array to denote which zebrafish features
+# Leave what you want in this zstyle list to denote which zebrafish features
 # you want to disable.
 zstyle ':zebrafish:features' 'disable' \
   'compinit' \
@@ -50,7 +50,7 @@ zstyle ':zebrafish:features' 'disable' \
   'zsh-options' \
   'zshrc.d'
 
-# Leave what you want in this zstyle array to denote which zebrafish external
+# Leave what you want in this zstyle list to denote which zebrafish external
 # plugins you want to disable.
 zstyle ':zebrafish:plugins' 'disable' \
   'autosuggestions' \
@@ -106,7 +106,7 @@ Installation methods:
   ```
 - [antibody]: `antibody bundle mattmc3/zebrafish`
 - [antigen]: `antigen bundle mattmc3/zebrafish`
-- curl:
+- manually with curl:
   ```shell
   curl -s -o ${ZDOTDIR:-$HOME}/zebrafish.zsh https://raw.githubusercontent.com/mattmc3/zebrafish/master/zebrafish.plugin.zsh
   echo ". ${ZDOTDIR:-$HOME}/zebrafish.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
