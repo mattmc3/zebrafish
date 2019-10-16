@@ -2,9 +2,16 @@
 
 [![MIT License](https://img.shields.io/badge/license-MIT-007EC7.svg?style=flat-square)](/LICENSE)
 
-<a title="Azul [Copyrighted free use], via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Zebrafisch.jpg" align="right"><img align="right" width="250" alt="Zebrafish" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Zebrafisch.jpg/512px-Zebrafisch.jpg"></a>
+<a title="Azul [Copyrighted free use], via Wikimedia Commons"
+   href="https://commons.wikimedia.org/wiki/File:Zebrafisch.jpg"
+   align="right">
+<img align="right"
+     width="250"
+     alt="zebrafish"
+     src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Zebrafisch.jpg/512px-Zebrafisch.jpg">
+</a>
 
-A solid base zsh configuration with only a single include file.
+A solid base zsh configuration achieved with only one small, simple include.
 
 No slow, boated framework. No excessive and hard to follow config tricks.
 Just a plain, simple, lightning fast zsh config with only a single file
@@ -123,7 +130,7 @@ Installation methods:
 - [antigen]: `antigen bundle mattmc3/zebrafish`
 - manually with curl:
   ```shell
-  curl -s -o ${ZDOTDIR:-$HOME}/zebrafish.zsh https://raw.githubusercontent.com/mattmc3/zebrafish/master/zebrafish.plugin.zsh
+  curl -s -o ${ZDOTDIR:-$HOME}/zebrafish.zsh https://raw.githubusercontent.com/mattmc3/zebrafish/master/zebrafish.zsh
   echo ". ${ZDOTDIR:-$HOME}/zebrafish.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
   ```
 
