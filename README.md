@@ -29,6 +29,21 @@ Borrows some great ideas from [fish shell][fish-shell], but with a zsh flair.
 - Call-out mistakes easily with [syntax highlighting][fast-syntax-highlighting] for shell commands
 - More complete [completions][zsh-completions]
 
+## How is zebrafish different?
+
+Projects like [oh-my-zsh] and [prezto] are neat. They do a ton of work to create a
+full featured zsh environment, and make zsh welcoming and exciting for new users.
+But these frameworks have some serious downsides. They can be slow. They have a
+ton of files and plugins. They mix themes and aliases and configuration and functions
+and plugins all into one giant soup of zsh stuff. It's hard to know what it's all
+doing, and even harder to customize the parts you might not like.
+
+zebrafish is different because it's not a full on zsh framework that does everything
+under the sun. Instead, it's a set of sane defaults that lets you easily build up the
+rest of you zsh config from there. Because zebrafish is a single file, you also can
+easily push parts of this configuration to a server that cannot reach out to git
+sources like github.
+
 ## Customization
 
 zebrafish has great defaults. It's built to provide you with a full-featured
@@ -39,8 +54,8 @@ settings are available to add to your `.zshrc` prior to loading zebrafish
 if you decide you need them.
 
 ```shell
-# Leave what you want in this zstyle list to denote which zebrafish features
-# you want to disable.
+# Leave what you want in this zstyle list to denote which zebrafish
+# features you want to disable.
 zstyle ':zebrafish:features' 'disable' \
   'compinit' \
   'history' \
@@ -50,8 +65,8 @@ zstyle ':zebrafish:features' 'disable' \
   'zsh-options' \
   'zshrc.d'
 
-# Leave what you want in this zstyle list to denote which zebrafish external
-# plugins you want to disable.
+# Leave what you want in this zstyle list to denote which zebrafish
+# external plugins you want to disable.
 zstyle ':zebrafish:plugins' 'disable' \
   'autosuggestions' \
   'completions' \
@@ -117,6 +132,7 @@ Installation methods:
 [fast-syntax-highlighting]:      https://github.com/zdharma/fast-syntax-highlighting
 [fish-shell]:                    https://fishshell.com/
 [oh-my-zsh]:                     https://github.com/robbyrussell/oh-my-zsh
+[prezto]:                        https://github.com/sorin-ionescu/prezto
 [xdg-basedirs]:                  https://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
 [zgen]:                          https://github.com/tarjoilija/zgen
 [zsh-autosuggestions]:           https://github.com/zsh-users/zsh-autosuggestions
