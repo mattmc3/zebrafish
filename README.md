@@ -1,5 +1,9 @@
 # zebrafish
 
+[![MIT License](https://img.shields.io/badge/license-MIT-007EC7.svg?style=flat-square)](/LICENSE)
+
+<a title="Azul [Copyrighted free use], via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Zebrafisch.jpg" align="right"><img align="right" width="250" alt="Zebrafish" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Zebrafisch.jpg/512px-Zebrafisch.jpg"></a>
+
 A solid base zsh configuration with only a single include file.
 
 No slow, boated framework. No excessive and hard to follow config tricks.
@@ -9,7 +13,7 @@ Borrows some great ideas from [fish shell][fish-shell], but with a zsh flair.
 
 ## What's included
 
-Leverage amazing built-in ZSH features:
+### Leverage amazing built-in ZSH features:
 
 - Better ZSH default settings
 - Sane command history configuration
@@ -18,7 +22,7 @@ Leverage amazing built-in ZSH features:
 - Robust Emacs keybindings in the shell
 - Sets your [XDG base directories][xdg-basedirs] if they haven't already been set
 
-Leverage awesome ZSH plugins:
+### Leverage awesome ZSH plugins:
 
 - Smart command [autosuggestions][zsh-autosuggestions] based on previously used commands
 - Allow [history substring searching][zsh-history-substring-search]
@@ -103,10 +107,10 @@ Installation methods:
 - [antibody]: `antibody bundle mattmc3/zebrafish`
 - [antigen]: `antigen bundle mattmc3/zebrafish`
 - curl:
-```shell
-curl -s -o ${ZDOTDIR:-$HOME}/zebrafish.zsh https://raw.githubusercontent.com/mattmc3/zebrafish/master/zebrafish.plugin.zsh
-echo ". ${ZDOTDIR:-$HOME}/zebrafish.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
-```
+  ```shell
+  curl -s -o ${ZDOTDIR:-$HOME}/zebrafish.zsh https://raw.githubusercontent.com/mattmc3/zebrafish/master/zebrafish.plugin.zsh
+  echo ". ${ZDOTDIR:-$HOME}/zebrafish.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
+  ```
 
 [antibody]:                      https://getantibody.github.io
 [antigen]:                       https://github.com/zsh-users/antigen
