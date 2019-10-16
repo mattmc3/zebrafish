@@ -2,6 +2,7 @@
 # MIT license
 # zebrafish.zsh
 # version: 0.9.0
+# https://github.com/mattmc3/zebrafish/blob/master/zebrafish.plugin.zsh
 #
 # A solid base zsh configuration with only a single include file.
 # No slow, boated framework. No excessive and hard to follow config tricks.
@@ -169,7 +170,7 @@ if ! (($_disabled_features[(Ie)compinit])); then
 fi
 
 
-### ZFunctions
+### Z-Functions
 # auto load any function in the functions location
 if ! (($_disabled_features[(Ie)zfunctions])); then
   [[ -d "$_zfunctions_dir" ]] || mkdir -p "$_zfunctions_dir"
@@ -193,7 +194,7 @@ function _load_plugin() {
     mkdir -p "$_zebrafish_dir/plugins/$gituser"
     git clone --recursive --depth 1 https://github.com/$1.git "$_zebrafish_dir/plugins/$1"
 
-    # complie the plugin contents
+    # compile the plugin contents
     autoload -U zrecompile
     local zfile
     for zfile in "$_zebrafish_dir/plugins/$1"/**/*.zsh(.N); do
