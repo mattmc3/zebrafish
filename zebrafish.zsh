@@ -1,13 +1,13 @@
 # Copyright (c) 2019 mattmc3
 # MIT license
 # zebrafish.zsh
-# version: 0.9.1
+# version: 0.2.0
 # https://github.com/mattmc3/zebrafish
 #
 # A solid base zsh configuration achieved with only one small, simple include.
 #
 # No slow, boated framework. No excessive and hard to follow config tricks.
-# Just a plain, simple, lightning fast zsh config with only a single file
+# Just a plain, simple, lightning fast zsh config with only a single include
 
 ### init
 # https://stackoverflow.com/questions/9901210/bash-source0-equivalent-in-zsh
@@ -16,6 +16,7 @@
 # setup variables from zstyle settings
 zstyle -g _disabled_features ':zebrafish:features' disable
 zstyle -g _disabled_plugins ':zebrafish:plugins' disable
+zstyle -g _disabled_prompts ':zebrafish:prompts'
 zstyle -g _zshrcd_dir ':zebrafish:paths' 'zshrc.d'
 if [[ -z $_zshrcd_dir ]]; then
   [[ -n $ZDOTDIR ]] && _zshrcd_dir="${ZDOTDIR}"/zshrc.d || _zshrcd_dir="$HOME"/.zshrc.d
@@ -25,6 +26,37 @@ if [[ -z $_zfunctions_dir ]]; then
   [[ -n $ZDOTDIR ]] && _zfunctions_dir="${ZDOTDIR}"/zfunctions || _zfunctions_dir="$HOME"/.zfunctions
 fi
 _zebrafish_dir=${ZDOTDIR:-$HOME}/.zebrafish
+
+# get plugins from github
+function _git_load() {
+  setopt local_options extended_glob
+
+  local plugin_type=$1
+  local gituser=${2%/*}
+  local repo=${2#*/}
+  local destdir="$_zebrafish_dir/${plugin_type}s"
+
+  # see if the plugin exists
+  if [[ ! -d "$destdir/$2" ]]; then
+    mkdir -p "$destdir/$gituser"
+    git clone --recursive --depth 1 https://github.com/$2.git "$destdir/$2"
+
+    # compile the plugin contents
+    autoload -U zrecompile
+    local zfile
+    for zfile in "$destdir/$2"/**/*.zsh(.N); do
+      zrecompile -pq ${zfile}
+    done
+    for zfile in "$destdir/$2"/**/prompt_*_setup(.N); do
+      zrecompile -pq ${zfile}
+    done
+  fi
+  if [[ "$1" == "theme" ]]; then
+    fpath+=("$destdir/$2")
+  else
+    source "$destdir/$2/${repo}.plugin.zsh"
+  fi
+}
 
 
 ### XDG
@@ -184,41 +216,63 @@ fi
 
 
 ### External plugins
-function _load_plugin() {
+function _git_load() {
   setopt local_options extended_glob
 
-  local gituser=${1%/*}
-  local repo=${1#*/}
+  local plugin_type=$1
+  local gituser=${2%/*}
+  local repo=${2#*/}
+  local destdir="$_zebrafish_dir/${plugin_type}s"
 
   # see if the plugin exists
-  if [[ ! -d "$_zebrafish_dir/plugins/$1" ]]; then
-    mkdir -p "$_zebrafish_dir/plugins/$gituser"
-    git clone --recursive --depth 1 https://github.com/$1.git "$_zebrafish_dir/plugins/$1"
+  if [[ ! -d "$destdir/$2" ]]; then
+    mkdir -p "$destdir/$gituser"
+    git clone --recursive --depth 1 https://github.com/$2.git "$destdir/$2"
 
     # compile the plugin contents
     autoload -U zrecompile
     local zfile
-    for zfile in "$_zebrafish_dir/plugins/$1"/**/*.zsh(.N); do
+    for zfile in "$destdir/$2"/**/*.zsh(.N); do
+      zrecompile -pq ${zfile}
+    done
+    for zfile in "$destdir/$2"/**/prompt_*_setup(.N); do
       zrecompile -pq ${zfile}
     done
   fi
-  source "$_zebrafish_dir/plugins/$1/${repo}.plugin.zsh"
+  if [[ "$1" == "theme" ]]; then
+    fpath+=("$destdir/$2")
+  else
+    source "$destdir/$2/${repo}.plugin.zsh"
+  fi
 }
 
 if ! (($_disabled_plugins[(Ie)autosuggestions])); then
-  _load_plugin 'zsh-users/zsh-autosuggestions'
+  _git_load 'plugin' 'zsh-users/zsh-autosuggestions'
   ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
 fi
 if ! (($_disabled_plugins[(Ie)completions])); then
-  _load_plugin 'zsh-users/zsh-completions'
+  _git_load 'plugin' 'zsh-users/zsh-completions'
 fi
 if ! (($_disabled_plugins[(Ie)history-substring-search])); then
-  _load_plugin 'zsh-users/zsh-history-substring-search'
+  _git_load 'plugin' 'zsh-users/zsh-history-substring-search'
 fi
 if ! (($_disabled_plugins[(Ie)syntax-highlighting])); then
-  _load_plugin 'zdharma/fast-syntax-highlighting'
+  _git_load 'plugin' 'zdharma/fast-syntax-highlighting'
 fi
 
+### Prompts
+autoload -U promptinit
+if ! (($_disabled_prompts[(Ie)lean])); then
+  _git_load 'theme' 'miekg/lean'
+fi
+if ! (($_disabled_prompts[(Ie)pure])); then
+  _git_load 'theme' 'sindresorhus/pure'
+fi
+if ! (($_disabled_prompts[(Ie)spaceship])); then
+  _git_load 'theme' 'denysdovhan/spaceship-prompt'
+  ln -sf "$_zebrafish_dir/themes/denysdovhan/spaceship-prompt/spaceship.zsh" "$_zebrafish_dir/themes/denysdovhan/spaceship-prompt/prompt_spaceship_setup"
+fi
+promptinit
 
 ### .zshrc.d
 if ! (($_disabled_features[(Ie)zshrc.d])); then
@@ -235,7 +289,8 @@ fi
 ### Cleanup
 unset _disabled_features
 unset _disabled_plugins
+unset _disabled_prompts
 unset _zfunctions_dir
 unset _zshrcd_dir
 unset _zebrafish_dir
-unset -f _load_plugin
+unset -f _git_load
