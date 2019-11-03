@@ -1,8 +1,7 @@
 # Customization
 
-Zebrafish has great defaults. It's built to provide you with a an opinionated,
-full-featured zsh setup with no extra configuration necessary beyond sourcing
-`zebrafish.zsh`.
+Zebrafish has great defaults. It's built to provide you with an opinionated,
+well configured zsh setup.
 
 However, sometimes you really do want to adjust features. These [zstyle]
 settings are available to add to your `.zshrc` prior to loading Zebrafish
@@ -14,36 +13,29 @@ if you decide you need them.
 zstyle ':zebrafish:features' 'disable' \
   'compinit' \
   'history' \
+  'environment' \
   'key-bindings' \
-  'xdg' \
-  'zfunctions' \
-  'zsh-options' \
-  'zshrc.d'
+  'xdg'
 
-# Leave what you want in this zstyle list to denote which zebrafish
-# external plugins you want to disable.
-zstyle ':zebrafish:plugins' 'disable' \
-  'autosuggestions' \
-  'completions' \
-  'history-substring-search' \
-  'syntax-highlighting'
-
-# Leave what you want in this zstyle list to denote which zebrafish
-# prompts you want to disable.
-zstyle ':zebrafish:prompts' 'disable' \
-  'pure' \
-  'lean' \
-  'spaceship'
+# Additionally, you can also turn off 'zfunctions', 'zplugins', 'zprompts', and
+# 'zshrc.d', but these features are only used if the directories for them exist,
+# so there's rarely a good reason to turn them off unless you are experimenting.
 ```
 
 If you want to customize directory locations, use the following:
 
 ```shell
-# to change the default ZSHrc.d path
-zstyle ':zebrafish:paths' 'zshrc.d' ~/.config/zsh/conf.d
+# to change the default zshrc.d path from $ZDOTDIR/.zshrc.d
+zstyle ':zebrafish:zshrc.d' 'path' ~/.config/zsh/conf.d
 
-# to change the default zfunctions path
-zstyle ':zebrafish:paths' 'zfunctions' ~/.config/zsh/functions
+# to change the default zprompts path from $ZDOTDIR/.zprompts
+zstyle ':zebrafish:zprompts' 'path' ~/.config/zsh/myprompts
+
+# to change the default zplugins path from $ZDOTDIR/.zplugins
+zstyle ':zebrafish:zplugins' 'path' ~/.config/zsh/myplugins
+
+# to change the default zfunctions path from $ZDOTDIR/.zfunctions
+zstyle ':zebrafish:zfunctions' 'path' ~/.config/zsh/myfunctions
 ```
 
 If you want to see which Zebrafish settings you have set, run this:
