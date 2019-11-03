@@ -2,12 +2,16 @@
 # MIT license
 # zebrafish.zsh
 # version: 0.2.0
-# https://github.com/mattmc3/zebrafish
+# homepage: https://github.com/mattmc3/zebrafish
 #
 # A solid base zsh configuration achieved with only one small, simple include.
 #
 # No slow, boated frameworks. No excessive and hard to follow config tricks.
 # Just a plain, simple, lightning fast zsh config with only a single include.
+#
+# simple install:
+#   curl -s -o ${ZDOTDIR:-$HOME}/.zebrafish.zsh https://raw.githubusercontent.com/mattmc3/zebrafish/master/zebrafish.zsh
+#   echo '. ${ZDOTDIR:-$HOME}/.zebrafish.zsh' >> ${ZDOTDIR:-$HOME}/.zshrc
 
 #
 ## Init
