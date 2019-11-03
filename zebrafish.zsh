@@ -234,11 +234,61 @@ if ! (($_disabled_features[(Ie)compinit])); then
   _zcompinit
 fi
 
+#
+## .zplugins
+_load_plugin() {
+  local dir=$1
+  local plugin=$2
+  local plugin_name location
 
-### Z-Functions
+  # split on the slash
+  if [[ $plugin = */* ]]; then
+    dir=${dir}/${plugin%/*}
+    plugin_name=${plugin#*/}
+  else
+    plugin_name=${plugin}
+fi
+  location=${dir}/${plugin_name}
+
+  if [[ -f "${location}.zsh" ]]; then
+    source "${location}.zsh"
+  elif [[ -f "${location}.plugin.zsh" ]]; then
+    source  "${location}.plugin.zsh"
+  elif [[ -f "${location}/init.zsh" ]]; then
+    source  "${location}/init.zsh"
+  else
+    echo "Failed to load plugin: $plugin" >&2
+    return 1
+  fi
+  return 0
+}
+# if plugins are specified, load them in order
+if ! (($_disabled_features[(Ie)zplugins])) && [[ -d "$_zplugins_dir" ]]; then
+  for _zplugin in $_zplugins; do
+    if [[ -f "$plugin" ]]; then
+      source "$plugin"
+    else
+      _load_plugin $_zplugins_dir $_zplugin
+fi
+  done
+  unset _zplugin
+fi
+
+#
+## .zprompts
+# add any subfolder of .zprompts containing prompt_*_setup to fpath
+if ! (($_disabled_features[(Ie)zprompts])) && [[ -d "$_zprompts_dir" ]]; then
+  for _zdir in "$_zprompts_dir"/**/prompt_*_setup(N:a:h); do
+    fpath=($fpath $_zdir)
+  done
+  unset _zdir
+  autoload -U promptinit; promptinit
+fi
+
+#
+## .zfunctions
 # auto load any function in the functions location
-if ! (($_disabled_features[(Ie)zfunctions])); then
-  [[ -d "$_zfunctions_dir" ]] || mkdir -p "$_zfunctions_dir"
+if ! (($_disabled_features[(Ie)zfunctions])) && [[ -d "$_zfunctions_dir" ]]; then
   fpath=("$_zfunctions_dir" $fpath)
   for _zfunc in "$_zfunctions_dir"/*(N); do
     autoload -U "$_zfunc"
@@ -246,69 +296,9 @@ if ! (($_disabled_features[(Ie)zfunctions])); then
   unset _zfunc
 fi
 
-
-### External plugins
-function _git_load() {
-  setopt local_options extended_glob
-
-  local plugin_type=$1
-  local gituser=${2%/*}
-  local repo=${2#*/}
-  local destdir="$_zebrafish_dir/${plugin_type}s"
-
-  # see if the plugin exists
-  if [[ ! -d "$destdir/$2" ]]; then
-    mkdir -p "$destdir/$gituser"
-    git clone --recursive --depth 1 https://github.com/$2.git "$destdir/$2"
-
-    # compile the plugin contents
-    autoload -U zrecompile
-    local zfile
-    for zfile in "$destdir/$2"/**/*.zsh(.N); do
-      zrecompile -pq ${zfile}
-    done
-    for zfile in "$destdir/$2"/**/prompt_*_setup(.N); do
-      zrecompile -pq ${zfile}
-    done
-  fi
-  if [[ "$1" == "theme" ]]; then
-    fpath+=("$destdir/$2")
-  else
-    source "$destdir/$2/${repo}.plugin.zsh"
-  fi
-}
-
-if ! (($_disabled_plugins[(Ie)autosuggestions])); then
-  _git_load 'plugin' 'zsh-users/zsh-autosuggestions'
-  ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
-fi
-if ! (($_disabled_plugins[(Ie)completions])); then
-  _git_load 'plugin' 'zsh-users/zsh-completions'
-fi
-if ! (($_disabled_plugins[(Ie)history-substring-search])); then
-  _git_load 'plugin' 'zsh-users/zsh-history-substring-search'
-fi
-if ! (($_disabled_plugins[(Ie)syntax-highlighting])); then
-  _git_load 'plugin' 'zdharma/fast-syntax-highlighting'
-fi
-
-### Prompts
-autoload -U promptinit
-if ! (($_disabled_prompts[(Ie)lean])); then
-  _git_load 'theme' 'miekg/lean'
-fi
-if ! (($_disabled_prompts[(Ie)pure])); then
-  _git_load 'theme' 'sindresorhus/pure'
-fi
-if ! (($_disabled_prompts[(Ie)spaceship])); then
-  _git_load 'theme' 'denysdovhan/spaceship-prompt'
-  ln -sf "$_zebrafish_dir/themes/denysdovhan/spaceship-prompt/spaceship.zsh" "$_zebrafish_dir/themes/denysdovhan/spaceship-prompt/prompt_spaceship_setup"
-fi
-promptinit
-
-### .zshrc.d
-if ! (($_disabled_features[(Ie)zshrc.d])); then
-  [[ -d "$_zshrcd_dir" ]] || mkdir -p "$_zshrcd_dir"
+#
+## .zshrc.d
+if ! (($_disabled_features[(Ie)zshrc.d])) && [[ -d "$_zshrcd_dir" ]]; then
   for _zfile in "$_zshrcd_dir"/*.{sh,zsh}(N); do
     # ignore files that begin with a tilde
     case $_zfile:t in ~*) continue;; esac
@@ -317,12 +307,12 @@ if ! (($_disabled_features[(Ie)zshrc.d])); then
   unset _zfile
 fi
 
-
-### Cleanup
+#
+## Cleanup
 unset _disabled_features
-unset _disabled_plugins
-unset _disabled_prompts
 unset _zfunctions_dir
 unset _zshrcd_dir
-unset _zebrafish_dir
-unset -f _git_load
+unset _zprompts_dir
+unset _zplugins_dir
+unset _zplugins
+unfunction _load_plugin
