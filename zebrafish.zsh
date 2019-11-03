@@ -156,12 +156,20 @@ if ! (($_disabled_features[(Ie)environment])); then
   export VISUAL="${VISUAL:-vim}"
 fi
 
+#
+## History
 if ! (($_disabled_features[(Ie)history])); then
-  ### History
-  SAVEHIST=100000
-  HISTSIZE=100000
-  HISTFILE="${HISTFILE:-$XDG_DATA_HOME/zsh/zsh_history}"
+  SAVEHIST="${SAVEHIST:-10000}"
+  HISTSIZE="${HISTSIZE:-10000}"
+  if [[ -z $HISTFILE ]]; then
+    if [[ -d $XDG_DATA_HOME ]]; then
+      HISTFILE="$XDG_DATA_HOME/zsh/zhistory}"
   [[ -d "$XDG_DATA_HOME"/zsh ]] || mkdir -p "$XDG_DATA_HOME"/zsh
+      [[ -f "${ZDOTDIR:-$HOME}/.zhistory" ]] || ln -sf "$HISTFILE" "${ZDOTDIR:-$HOME}/.zhistory"
+    else
+      HISTFILE="${ZDOTDIR:-$HOME}/.zhistory"
+fi
+  fi
 fi
 
 ### Key-bindings
