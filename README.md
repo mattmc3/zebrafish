@@ -20,26 +20,36 @@ Borrows some great ideas from [fish shell][fish-shell], but with a ZSH flair.
 
 ## What's included
 
-### Leverage amazing built-in ZSH features
+### Leverage amazing ZSH features using what already comes with ZSH
 
 - Sets better ZSH default options
 - Sets good defaults for common environment variables
 - Adds a sane command history configuration
 - Auto-sources any ZSH config files you put in `${ZDOTDIR:-$HOME}/.zshrc.d`
 - Auto-loads any ZSH functions you put in `${ZDOTDIR:-$HOME}/.zfunctions`
+- Sets up prompt theme management using [built-in ZSH prompt themes][zsh-prompt-theme]
+- Adds great default keybindings
+- Sets your [XDG base directories][xdg-basedirs] if they haven't already been set
+
+### Extend ZSH features with other ZSH projects from around the web
+
 - Auto-sources any ZSH plugins you put in `${ZDOTDIR:-$HOME}/.zplugins`
 - Adds prompt themes to your `fpath` for any prompts in `${ZDOTDIR:-$HOME}/.zprompts`
-- Adds great default keybindings
-- Sets up prompt theme management using [built-in ZSH prompt themes][zsh-prompt-theme]
-- Sets your [XDG base directories][xdg-basedirs] if they haven't already been set
+
+### More information
+
+Zebrafish's features are covered in more detail on the
+[features.md](features.md) page.
 
 ## What's not included
 
 Zebrafish doesn't include anything you don't get out of the box with ZSH. That
-means that "plugins" from other git projects are not directly included, though
-they are supported.
+means that "plugins" and "prompts" from other git projects are not directly
+included in this project, though they are supported. Sometimes you are on a
+server where arbitrary ZSH code from the internet is not advisable, in which
+case Zebrafish will still work just fine as a standalone file - tiny and fast.
 
-There are a lot of great zsh plugins out there, and I highly recommend grabbing
+There are a lot of great ZSH plugins out there, and I highly recommend grabbing
 a few to add even more features to your ZSH config. You can use a plugin manager
 like [zgen] if you think you want one, though `git` is simple and easy too.
 Zebrafish can be treated like a plugin itself and loaded from a plugin manager,
@@ -89,32 +99,6 @@ means its likely you overrode Zebrafish defaults.
 There's no reason you can't put the contents of Zebrafish directly in your
 .zshrc. But, this project is great for folks that like a clean .zshrc file and
 want a great base to build their .zshrc from.
-
-### Prompts
-
-Some great prompts to try out:
-
-```shell
-# pure
-git clone --recursive --depth=1 https://github.com/sindresorhus/pure ${ZDOTDIR:-$HOME}/.zprompts/sindresorhus/pure
-# lean
-git clone --recursive --depth=1 https://github.com/miekg/lean.git ${ZDOTDIR:-$HOME}/.zprompts/miekg/lean
-# spaceship
-git clone --recursive --depth=1 https://github.com/denysdovhan/spaceship-prompt.git ${ZDOTDIR:-$HOME}/.zprompts/denysdovhan/spaceship-prompt
-ln -sf "${ZDOTDIR:-$HOME}/.zprompts/denysdovhan/spaceship-prompt/spaceship.zsh" "${ZDOTDIR:-$HOME}/.zprompts/denysdovhan/spaceship-prompt/prompt_spaceship_setup"
-```
-
-### Plugins
-
-```shell
-# Leave what you want in this zstyle list to denote which zebrafish
-# external plugins you want to disable.
-zstyle ':zebrafish:plugins' 'disable' \
-  'autosuggestions' \
-  'completions' \
-  'history-substring-search' \
-  'syntax-highlighting'
-```
 
 ## Customization
 
