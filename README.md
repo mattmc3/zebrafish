@@ -11,10 +11,10 @@
      src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Zebrafisch.jpg/512px-Zebrafisch.jpg">
 </a>
 
-A solid base ZSH configuration achieved with only one small, simple include.
+A solid base ZSH configuration achieved with one small, simple include.
 
 No slow, boated framework. No excessive and hard to follow config tricks.
-Just a plain, simple, lightning fast ZSH config with only a single file
+Just a plain, simple, lightning fast ZSH config with only a single file.
 
 Borrows some great ideas from [fish shell][fish-shell], but with a ZSH flair.
 
@@ -22,44 +22,46 @@ Borrows some great ideas from [fish shell][fish-shell], but with a ZSH flair.
 
 ### Leverage amazing built-in ZSH features
 
-- Better ZSH default settings
-- Sane command history configuration
-- Auto-load any functions you put in `$ZDOTDIR/zfunctions`
-- Auto-source any ZSH files you put in `$ZDOTDIR/zshrc.d`
-- Robust keybindings in the shell
+- Sets better ZSH default options
+- Sets good defaults for common environment variables
+- Adds a sane command history configuration
+- Auto-sources any ZSH config files you put in `${ZDOTDIR:-$HOME}/.zshrc.d`
+- Auto-loads any ZSH functions you put in `${ZDOTDIR:-$HOME}/.zfunctions`
+- Auto-sources any ZSH plugins you put in `${ZDOTDIR:-$HOME}/.zplugins`
+- Adds prompt themes to your `fpath` for any prompts in `${ZDOTDIR:-$HOME}/.zprompts`
+- Adds great default keybindings
+- Sets up prompt theme management using [built-in ZSH prompt themes][zsh-prompt-theme]
 - Sets your [XDG base directories][xdg-basedirs] if they haven't already been set
 
-### Leverage awesome ZSH plugins
+## What's not included
 
-- Smart command [autosuggestions][zsh-autosuggestions] based on previously used commands
-- Allow [history substring searching][zsh-history-substring-search]
-- Call-out mistakes easily with [syntax highlighting][fast-syntax-highlighting] for shell commands
-- More complete [completions][zsh-completions]
+Zebrafish doesn't include anything you don't get out of the box with ZSH. That
+means that "plugins" from other git projects are not directly included, though
+they are supported.
 
-### Leverage attractive ZSH prompt themes
-
-- Other frameworks try to add their own clumsy theming system. Why?!
-- Zebrafish uses the built-in [ZSH prompt theme system][zsh-prompt-theme]
-- Some of the best ZSH themes are already included and available using the
-  `prompt` command
-- `prompt -l` lists what prompts are available
-- `prompt -p` previews the prompts
-- Read more [here](http://zsh.sourceforge.net/Doc/Release/User-Contributions.html#Theme-Selection)
+There are a lot of great zsh plugins out there, and I highly recommend grabbing
+a few to add even more features to your ZSH config. You can use a plugin manager
+like [zgen] if you think you want one, though `git` is simple and easy too.
+Zebrafish can be treated like a plugin itself and loaded from a plugin manager,
+or just a simple stand alone include from your .zshrc and then it can load
+plugins you pulled with `git` into `${ZDOTDIR:-$HOME}/.zplugins}`.
 
 ## How is Zebrafish different?
 
-Projects like [oh-my-zsh] and [prezto] are neat. They do a ton of work to create a
-full featured ZSH environment, and make ZSH welcoming and exciting for new users.
-But these frameworks have downsides. They can be slow. They have a ton of files
-and configs and plugins. They are in charge of bootstrapping your whole ZSH
-configuration. They mix themes and aliases and configuration and functions
-and plugins all into one giant soup of ZSH stuff. It's hard to know what it's all
-doing, and even harder to modify the parts you might not like.
+### Compared to frameworks
 
-Zebrafish is different because it's not a ZSH framework that tries to do everything
-under the sun. Instead, it's a set of sane defaults and handy tools that lets you
-easily build up the rest of you ZSH config from there. Since Zebrafish is housed
-in a single file, you also can easily do things like:
+Projects like [oh-my-zsh] and [prezto] are neat. They do a ton of work to create
+a full featured ZSH environment, and make ZSH welcoming and exciting for new
+users. But these frameworks have downsides. They can be slow. They have a ton of
+files and configs and plugins. They are in charge of bootstrapping your whole
+ZSH configuration. They mix themes and aliases and configuration options and
+functions and plugins all into one giant soup of ZSH stuff. It's hard to know
+what it's all doing, and even harder to modify the parts you might not like.
+
+Zebrafish is different because it's not a ZSH framework that tries to do
+everything under the sun. Instead, it's just a set of sane defaults and handy
+tools that lets you easily build up the rest of you ZSH config from there. Since
+Zebrafish is housed in a single file, you also can easily do things like:
 
 - See everything Zebrafish does in one place
 - Turn off parts you don't like
@@ -71,37 +73,76 @@ in a single file, you also can easily do things like:
 - Use parts of this configuration on a server that cannot reach out to git
   sources like github.
 - Add this file directly to your own [dotfiles] repo or manage it with a plugin
-  manager like [zgen]
+  manager
 - Share your ZSH configuration with your co-workers and friends easily without
   forcing them to commit to using a whole framework
 
 If you like [oh-my-zsh] or [prezto], you can keep using them with Zebrafish.
-Zebrafish is meant to be built upon, but it's full featured and powerful all
-by itself.
+Zebrafish is meant to be built upon. It just sets up your initial ZSH
+configuration in a way that makes sense so you don't have to do it all.
+
+Just keep in mind that loading other plugins and frameworks _after_ Zebrafish
+means its likely you overrode Zebrafish defaults.
+
+### Compared to just using .zshrc
+
+There's no reason you can't put the contents of Zebrafish directly in your
+.zshrc. But, this project is great for folks that like a clean .zshrc file and
+want a great base to build their .zshrc from.
+
+### Prompts
+
+Some great prompts to try out:
+
+```shell
+# pure
+git clone --recursive --depth=1 https://github.com/sindresorhus/pure ${ZDOTDIR:-$HOME}/.zprompts/sindresorhus/pure
+# lean
+git clone --recursive --depth=1 https://github.com/miekg/lean.git ${ZDOTDIR:-$HOME}/.zprompts/miekg/lean
+# spaceship
+git clone --recursive --depth=1 https://github.com/denysdovhan/spaceship-prompt.git ${ZDOTDIR:-$HOME}/.zprompts/denysdovhan/spaceship-prompt
+ln -sf "${ZDOTDIR:-$HOME}/.zprompts/denysdovhan/spaceship-prompt/spaceship.zsh" "${ZDOTDIR:-$HOME}/.zprompts/denysdovhan/spaceship-prompt/prompt_spaceship_setup"
+```
+
+### Plugins
+
+```shell
+# Leave what you want in this zstyle list to denote which zebrafish
+# external plugins you want to disable.
+zstyle ':zebrafish:plugins' 'disable' \
+  'autosuggestions' \
+  'completions' \
+  'history-substring-search' \
+  'syntax-highlighting'
+```
 
 ## Customization
 
-Zebrafish has great defaults, and by default it's intended to work with nothing
-more fancy than `source ${ZDOTDIR:-$HOME}/zebrafish.zsh`, but sometimes you
+Zebrafish has great settings, and by default it's intended to work with nothing
+more fancy than `source ${ZDOTDIR:-$HOME}/.zebrafish.zsh`, but sometimes you
 really do want to customize something. The [customization.md](customization.md)
 in this project describes those options.
 
 ## Installation
 
 Installation methods:
+
 - [zgen]: `zgen load mattmc3/zebrafish`
 - [oh-my-zsh]:
+
   ```shell
   ZSH_CUSTOM=${ZSH_CUSTOM:-$ZSH/custom}
   git clone --depth 1 https://github.com/mattmc3/zebrafish.git $ZSH_CUSTOM/zebrafish
   # now add zebrafish to your plugins variable in .zshrc
   ```
+
 - [antibody]: `antibody bundle mattmc3/zebrafish`
 - [antigen]: `antigen bundle mattmc3/zebrafish`
 - manually with curl:
+
   ```shell
-  curl -s -o ${ZDOTDIR:-$HOME}/zebrafish.zsh https://raw.githubusercontent.com/mattmc3/zebrafish/master/zebrafish.zsh
-  echo ". ${ZDOTDIR:-$HOME}/zebrafish.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
+  curl -s -o ${ZDOTDIR:-$HOME}/.zebrafish.zsh https://raw.githubusercontent.com/mattmc3/zebrafish/master/zebrafish.zsh
+  echo ". ${ZDOTDIR:-$HOME}/.zebrafish.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
   ```
 
 [antibody]:                      https://getantibody.github.io
