@@ -1,7 +1,7 @@
 # Copyright (c) 2019 mattmc3
 # MIT license
 # zebrafish.zsh
-# version: 0.2.0
+# version: 0.3.0
 # homepage: https://github.com/mattmc3/zebrafish
 #
 # A solid base zsh configuration achieved with only one small, simple include.
