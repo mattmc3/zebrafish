@@ -39,7 +39,7 @@ Borrows some great ideas from [fish shell][fish-shell], but with a ZSH flair.
 ### More information
 
 Zebrafish's features are covered in more detail on the
-[features.md](features.md) page.
+[features.md](docs/features.md) page.
 
 ## What's not included
 
@@ -104,7 +104,7 @@ want a great base to build their .zshrc from.
 
 Zebrafish has great settings, and by default it's intended to work with nothing
 more fancy than `source ${ZDOTDIR:-$HOME}/.zebrafish.zsh`, but sometimes you
-really do want to customize something. The [customization.md](customization.md)
+really do want to customize something. The [customization.md](docs/customization.md)
 in this project describes those options.
 
 ## Installation

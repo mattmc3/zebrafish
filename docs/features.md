@@ -46,6 +46,20 @@ You can customize where prompts are put by changing this `zstyle` setting:
 zstyle ':zebrafish:zprompts' 'path' ~/.config/zsh/myprompts
 ```
 
+You can turn off prompts, but that's not really necessary since the zprompts
+feature is ignored if the directory doesn't exist.
+
+``` shell
+# Example of how to disable just 'zprompts'
+zstyle ':zebrafish:features' 'disable' 'zprompts'
+
+# Or add it amidst a list of other disabled features:
+zstyle ':zebrafish:features' 'disable' \
+  ... \
+  'zprompts' \
+  ...
+```
+
 ## Plugins
 
 Custom plugins are supported by adding projects to your `${ZDOTDIR:-$HOME}/.zplugins`
@@ -75,4 +89,18 @@ zstyle ':zebrafish:zplugins' 'load' \
   'zsh-users/zsh-completions' \
   'zsh-users/zsh-history-substring-search' \
   'zsh-users/zsh-syntax-highlighting'
+```
+
+You can turn off plugins, but that's not really necessary since the zplugins
+feature is ignored if the directory doesn't exist.
+
+``` shell
+# Example of how to disable just 'zplugins'
+zstyle ':zebrafish:features' 'disable' 'zplugins'
+
+# Or add it amidst a list of other disabled features:
+zstyle ':zebrafish:features' 'disable' \
+  ... \
+  'zplugins' \
+  ...
 ```
