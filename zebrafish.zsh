@@ -67,8 +67,8 @@ if ! (($_disabled_features[(Ie)xdg])); then
   export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-$HOME/.xdg}"
 fi
 
-### ZSH Options
-if ! (($_disabled_features[(Ie)zsh-options])); then
+#
+## ZSH Options
   # http://zsh.sourceforge.net/Doc/Release/Options.html
 
   # Changing Directories
@@ -140,6 +140,20 @@ if ! (($_disabled_features[(Ie)zsh-options])); then
   unsetopt beep                 # be quiet!
   setopt combining_chars        # combine zero-length punctuation characters (accents) with the base character
   setopt emacs                  # use emacs keybindings in the shell
+
+#
+## Environment
+if ! (($_disabled_features[(Ie)environment])); then
+  export LANG="${LANG:-en_US.UTF-8}"
+  export LANGUAGE="${LANGUAGE:-en}"
+  export LC_ALL="${LC_ALL:-en_US.UTF-8}"
+
+  export CLICOLOR="${CLICOLOR:-1}"
+  export LSCOLORS="${LSCOLORS:-ExfxcxdxbxGxDxabagacad}"
+
+  export PAGER="${PAGER:-less}"
+  export EDITOR="${EDITOR:-vim}"
+  export VISUAL="${VISUAL:-vim}"
 fi
 
 if ! (($_disabled_features[(Ie)history])); then
