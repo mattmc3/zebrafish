@@ -33,15 +33,16 @@ zplugins=(
   zsh-users/zsh-completions
   zsh-users/zsh-syntax-highlighting
 
-  # frameworks
-  robbyrussell/oh-my-zsh
-  sorin-ionescu/prezto
-
   # other great stuff
   rupa/z
   mattmc3/zsh-safe-rm
 )
+frameworks=(
+  robbyrussell/oh-my-zsh
+  sorin-ionescu/prezto
+)
 go_git_em $zplugins_dir $zplugins
+go_git_em $zplugins_dir $frameworks
 
 # zprompts
 zstyle -g zprompts_dir ':zebrafish:zprompts' 'path'
@@ -52,3 +53,11 @@ zprompts=(
   denysdovhan/spaceship-prompt
 )
 go_git_em $zprompts_dir $zprompts
+
+if ! grep -q '^prompt\ ' ${ZDOTDIR:-$HOME}/.zshrc; then
+  echo "prompt lean" >> "${ZDOTDIR:-$HOME}"/.zshrc
+fi
+if ! grep -q "^zstyle\ ':zebrafish:zplugins'\ 'load'" ${ZDOTDIR:-$HOME}/.zshrc; then
+  line="zstyle ':zebrafish:zplugins' 'load' ${zplugins}"
+  ex -sc "1i|$line" -cx ${ZDOTDIR:-$HOME}/.zshrc
+fi
