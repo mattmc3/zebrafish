@@ -147,6 +147,7 @@ fi
 # http://fishshell.com/docs/current/index.html#editor
 # https://github.com/changs/slimzsh/blob/master/keys.zsh
 if ! (($_disabled_features[(Ie)key-bindings])); then
+  export KEYTIMEOUT=${KEYTIMEOUT:-1}  # remove lag
   bindkey -e
   bindkey '\ew' kill-region
   bindkey -s '\el' "ls\n"
