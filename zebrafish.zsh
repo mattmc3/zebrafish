@@ -207,18 +207,18 @@ fi
 #
 ## .zplugins
 _load_plugin() {
-  local dir=$1
+  local zplugindir=$1
   local plugin=$2
   local plugin_name location
 
   # split on the slash
   if [[ $plugin = */* ]]; then
-    dir=${dir}/${plugin%/*}
+    # get part after slash
     plugin_name=${plugin#*/}
   else
     plugin_name=${plugin}
   fi
-  location=${dir}/${plugin_name}
+  location=${zplugindir}/${plugin}/${plugin_name}
 
   if [[ -f "${location}.zsh" ]]; then
     source "${location}.zsh"
@@ -227,6 +227,7 @@ _load_plugin() {
   elif [[ -f "${location}/init.zsh" ]]; then
     source  "${location}/init.zsh"
   else
+    echo "${location}"
     echo "Failed to load plugin: $plugin" >&2
     return 1
   fi
