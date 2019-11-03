@@ -224,12 +224,15 @@ _load_plugin() {
   fi
   location=${zplugindir}/${plugin}/${plugin_name}
 
+  # https://github.com/tarjoilija/zgen/blob/master/zgen.zsh#L346-L374
   if [[ -f "${location}.zsh" ]]; then
     source "${location}.zsh"
   elif [[ -f "${location}.plugin.zsh" ]]; then
     source  "${location}.plugin.zsh"
   elif [[ -f "${location}/init.zsh" ]]; then
     source  "${location}/init.zsh"
+  elif [[ -f "${location}.sh" ]]; then
+    source  "${location}.sh"
   else
     echo "${location}"
     echo "Failed to load plugin: $plugin" >&2
