@@ -1,7 +1,7 @@
 # Copyright (c) 2019 mattmc3
 # MIT license
 # zebrafish.plugin.zsh
-# version: 0.4.1
+# version: 0.4.2
 # homepage: https://github.com/mattmc3/zebrafish
 #
 # A solid base zsh configuration achieved with only one small, simple include.
@@ -152,8 +152,8 @@ if (($_features[(Ie)history])); then
   setopt inc_append_history      # write to the history file immediately, not when the shell exits
   unsetopt share_history         # don't share history between all sessions
 
-  SAVEHIST="${SAVEHIST:-10000}"
-  HISTSIZE="${HISTSIZE:-10000}"
+  SAVEHIST=10000
+  HISTSIZE=10000
   if [[ -z $HISTFILE ]]; then
     if [[ -d $XDG_DATA_HOME ]]; then
       HISTFILE="$XDG_DATA_HOME/zsh/zhistory"
