@@ -2,6 +2,8 @@
 
 ## version 0.4.0
 
+- [ ] Change defaut directories for zshrc.d and zfunctions to not have the
+      leading dot when placed in `$ZDOTDIR`
 - [x] Remove plugin and prompt functionality - those are out of scope and
       existing tools handle that better.
 
