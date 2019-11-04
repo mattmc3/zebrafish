@@ -6,12 +6,12 @@
 #
 # A solid base zsh configuration achieved with only one small, simple include.
 #
-# No slow, boated frameworks. No excessive and hard to follow config tricks.
-# Just a plain, simple, lightning fast zsh config with only a single include.
-#
-# simple install:
-#   curl -s -o ${ZDOTDIR:-$HOME}/.zebrafish.zsh https://raw.githubusercontent.com/mattmc3/zebrafish/master/zebrafish.zsh
+# single file install:
+#   curl -s -o ${ZDOTDIR:-$HOME}/.zebrafish.zsh https://raw.githubusercontent.com/mattmc3/zebrafish/master/zebrafish.plugin.zsh
 #   echo '. ${ZDOTDIR:-$HOME}/.zebrafish.zsh' >> ${ZDOTDIR:-$HOME}/.zshrc
+#
+# install as plugin with zgen:
+#   zgen load mattmc3/zebrafish
 
 #
 ## Init
@@ -41,12 +41,14 @@ fi
 # http://zsh.sourceforge.net/Doc/Release/Options.html
 
 # Changing Directories
+# http://zsh.sourceforge.net/Doc/Release/Options.html#Changing-Directories
 setopt auto_cd                 # if a command isn't valid, but is a directory, cd to that dir
 setopt auto_pushd              # make cd push the old directory onto the directory stack
 setopt pushd_ignore_dups       # don’t push multiple copies of the same directory onto the directory stack
 setopt pushd_minus             # exchanges the meanings of ‘+’ and ‘-’ when specifying a directory in the stack
 
 # Completions
+# http://zsh.sourceforge.net/Doc/Release/Options.html#Completion-2
 setopt always_to_end           # move cursor to the end of a completed word
 setopt auto_list               # automatically list choices on ambiguous completion
 setopt auto_menu               # show completion menu on a successive tab press
@@ -55,6 +57,7 @@ setopt complete_in_word        # complete from both ends of a word
 unsetopt menu_complete         # don't autoselect the first completion entry
 
 # Expansion and Globbing
+# http://zsh.sourceforge.net/Doc/Release/Options.html#Expansion-and-Globbing
 setopt extended_glob           # use more awesome globbing features
 setopt glob_dots               # include dotfiles when globbing
 
@@ -62,9 +65,10 @@ setopt glob_dots               # include dotfiles when globbing
 # set in history feature
 
 # Initialization
-# none
+# http://zsh.sourceforge.net/Doc/Release/Options.html#Initialisation
 
 # Input/Output
+# http://zsh.sourceforge.net/Doc/Release/Options.html#Input_002fOutput
 unsetopt clobber               # must use >| to truncate existing files
 unsetopt correct               # don't try to correct the spelling of commands
 unsetopt correct_all           # don't try to correct the spelling of all arguments in a line
@@ -76,6 +80,7 @@ setopt rc_quotes               # allow 'Henry''s Garage' instead of 'Henry'\''s 
 unsetopt rm_star_silent        # ask for confirmation for `rm *' or `rm path/*'
 
 # Job Control
+# http://zsh.sourceforge.net/Doc/Release/Options.html#Job-Control
 setopt auto_resume            # attempt to resume existing job before creating a new process
 unsetopt bg_nice              # don't run all background jobs at a lower priority
 unsetopt check_jobs           # don't report on jobs when shell exit
@@ -84,18 +89,20 @@ setopt long_list_jobs         # list jobs in the long format by default
 setopt notify                 # report status of background jobs immediately
 
 # Prompting
+# http://zsh.sourceforge.net/Doc/Release/Options.html#Prompting
 setopt prompt_subst           # expand parameters in prompt variables
 
 # Scripts and Functions
-# none
+# http://zsh.sourceforge.net/Doc/Release/Options.html#Scripts-and-Functions
 
 # Shell Emulation
-# none
+# http://zsh.sourceforge.net/Doc/Release/Options.html#Shell-Emulation
 
 # Shell State
-# none
+# http://zsh.sourceforge.net/Doc/Release/Options.html#Shell-State
 
 # Zle
+# http://zsh.sourceforge.net/Doc/Release/Options.html#Zle
 unsetopt beep                 # be quiet!
 setopt combining_chars        # combine zero-length punctuation characters (accents) with the base character
 setopt emacs                  # use emacs keybindings in the shell
