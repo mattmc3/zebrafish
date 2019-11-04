@@ -16,15 +16,31 @@
 #
 ## Init
 # setup variables from zstyle settings
-zstyle -g _disabled_features ':zebrafish:features' disable
+_dotprefix="."
+if [[ -n $ZDOTDIR ]] && [[ $ZDOTDIR != $HOME ]]; then
+  # no reason to hide directories in $ZDOTDIR
+  _dotprefix=""
+fi
+
+# if not defined, define the defaults
+if zstyle -T ':zebrafish:features' 'enable'; then
+  zstyle ':zebrafish:features' 'enable' 'compinit' 'history' 'environment' 'key-bindings' 'xdg' 'zfunctions' 'zshrc.d'
+fi
+if zstyle -T ':zebrafish:zshrc.d' 'path'; then
+  zstyle ':zebrafish:zshrc.d' 'path' "${ZDOTDIR:-$HOME}"/${_dotprefix}zshrc.d
+fi
+if zstyle -T ':zebrafish:zfunctions' 'path'; then
+  zstyle ':zebrafish:zfunctions' 'path' "${ZDOTDIR:-$HOME}"/${_dotprefix}zfunctions
+fi
+
+# load script variables from zstyle settings
+zstyle -g _features ':zebrafish:features' 'enable'
 zstyle -g _zshrcd_dir ':zebrafish:zshrc.d' 'path'
-[[ -n $_zshrcd_dir ]] || _zshrcd_dir="${ZDOTDIR:-$HOME}"/.zshrc.d
 zstyle -g _zfunctions_dir ':zebrafish:zfunctions' 'path'
-[[ -n $_zfunctions_dir ]] || _zfunctions_dir="${ZDOTDIR:-$HOME}"/.zfunctions
 
 #
 ## XDG
-if ! (($_disabled_features[(Ie)xdg])); then
+if (($_features[(Ie)xdg])); then
   export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
   export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
   export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
@@ -104,7 +120,7 @@ setopt emacs                  # use emacs keybindings in the shell
 
 #
 ## Environment
-if ! (($_disabled_features[(Ie)environment])); then
+if (($_features[(Ie)environment])); then
   export LANG="${LANG:-en_US.UTF-8}"
   export LANGUAGE="${LANGUAGE:-en}"
   export LC_ALL="${LC_ALL:-en_US.UTF-8}"
@@ -119,7 +135,7 @@ fi
 
 #
 ## History
-if ! (($_disabled_features[(Ie)history])); then
+if (($_features[(Ie)history])); then
   # http://zsh.sourceforge.net/Doc/Release/Options.html#History
   setopt append_history          # append to history file
   setopt extended_history        # write the history file in the ':start:elapsed;command' format
@@ -155,7 +171,7 @@ fi
 # https://github.com/fish-shell/fish-shell/blob/master/share/functions/fish_default_key_bindings.fish
 # http://fishshell.com/docs/current/index.html#editor
 # https://github.com/changs/slimzsh/blob/master/keys.zsh
-if ! (($_disabled_features[(Ie)key-bindings])); then
+if (($_features[(Ie)key-bindings])); then
   export KEYTIMEOUT=${KEYTIMEOUT:-1}  # remove lag
   bindkey -e
   bindkey '\ew' kill-region
@@ -209,14 +225,14 @@ _zcompinit() {
     { [[ ! -f "$zcdc" || "$zcd" -nt "$zcdc" ]] && rm -f "$zcdc" && zcompile "$zcd" } &!
   fi
 }
-if ! (($_disabled_features[(Ie)compinit])); then
+if (($_features[(Ie)compinit])); then
   _zcompinit
 fi
 
 #
 ## .zfunctions
 # auto load any function in the functions location
-if ! (($_disabled_features[(Ie)zfunctions])) && [[ -d "$_zfunctions_dir" ]]; then
+if (($_features[(Ie)zfunctions])) && [[ -d "$_zfunctions_dir" ]]; then
   fpath=("$_zfunctions_dir" $fpath)
   for _zfunc in "$_zfunctions_dir"/*(N); do
     autoload -U "$_zfunc"
@@ -226,7 +242,7 @@ fi
 
 #
 ## .zshrc.d
-if ! (($_disabled_features[(Ie)zshrc.d])) && [[ -d "$_zshrcd_dir" ]]; then
+if (($_features[(Ie)zshrc.d])) && [[ -d "$_zshrcd_dir" ]]; then
   for _zfile in "$_zshrcd_dir"/*.{sh,zsh}(N); do
     # ignore files that begin with a tilde
     case $_zfile:t in ~*) continue;; esac
@@ -237,6 +253,7 @@ fi
 
 #
 ## Cleanup
-unset _disabled_features
+unset _dotprefix
+unset _features
 unset _zfunctions_dir
 unset _zshrcd_dir
