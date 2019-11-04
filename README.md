@@ -13,9 +13,6 @@
 
 A solid base ZSH configuration achieved with one small, simple include.
 
-No slow, boated framework. No excessive and hard to follow config tricks.
-Just a plain, simple, lightning fast ZSH config with only a single file.
-
 Borrows some great ideas from [fish shell][fish-shell], but with a ZSH flair.
 
 ## What's included
@@ -24,12 +21,11 @@ Borrows some great ideas from [fish shell][fish-shell], but with a ZSH flair.
 
 - Sets better ZSH default options
 - Sets good defaults for common environment variables
-- Adds a sane command history configuration
+- Adds a sane history configuration
 - Auto-sources any ZSH config files you put in `${ZDOTDIR:-$HOME}/.zshrc.d`
-- Auto-loads any ZSH functions you put in `${ZDOTDIR:-$HOME}/.zfunctions`
-- Sets up prompt theme management using [built-in ZSH prompt themes][zsh-prompt-theme]
+- Lazy loads any ZSH function files you put in `${ZDOTDIR:-$HOME}/.zfunctions`
 - Adds great default keybindings
-- Sets your [XDG base directories][xdg-basedirs] if they haven't already been set
+- Sets the [XDG base directories][xdg-basedirs] if they haven't already been set
 
 ### Extend ZSH features with other ZSH projects from around the web
 
@@ -60,18 +56,19 @@ plugins you pulled with `git` into `${ZDOTDIR:-$HOME}/.zplugins}`.
 
 ### Compared to frameworks
 
-Projects like [oh-my-zsh] and [prezto] are neat. They do a ton of work to create
-a full featured ZSH environment, and make ZSH welcoming and exciting for new
-users. But these frameworks have downsides. They can be slow. They have a ton of
-files and configs and plugins. They are in charge of bootstrapping your whole
-ZSH configuration. They mix themes and aliases and configuration options and
-functions and plugins all into one giant soup of ZSH stuff. It's hard to know
+Projects like [oh-my-zsh], [zimfw] and [prezto] are neat. They do a ton of work
+to create a full featured ZSH environment, and make ZSH welcoming and exciting
+for new users. But these frameworks have downsides. They can be slow. They have
+a ton of files and configs and plugins. They are in charge of bootstrapping your
+whole ZSH configuration. They mix concepts of themes, aliases, functions, shell
+options, and plugins all into one giant soup of ZSH stuff. It's hard to know
 what it's all doing, and even harder to modify the parts you might not like.
 
 Zebrafish is different because it's not a ZSH framework that tries to do
 everything under the sun. Instead, it's just a set of sane defaults and handy
-tools that lets you easily build up the rest of you ZSH config from there. Since
-Zebrafish is housed in a single file, you also can easily do things like:
+tools that lets you easily build up the rest of you ZSH config from there. You
+can even use it with a ZSH framework if you prefer. Since Zebrafish is housed
+in a single file, you also can easily do things like:
 
 - See everything Zebrafish does in one place
 - Turn off parts you don't like
@@ -79,9 +76,9 @@ Zebrafish is housed in a single file, you also can easily do things like:
 - Roll your own ZSH configuration without all the boilerplate stuff that really
   should just be built-in [like other shells already do][fish-shell]
 - Control your whole config just from your custom .zshrc instead of from a
-  .specialrc file
-- Use parts of this configuration on a server that cannot reach out to git
-  sources like github.
+  .specialrc file like [prezto] and [zimfw] make you do.
+- Use this configuration on a server that cannot reach out to internet git
+  sources like GitHub.
 - Add this file directly to your own [dotfiles] repo or manage it with a plugin
   manager
 - Share your ZSH configuration with your co-workers and friends easily without
@@ -92,13 +89,13 @@ Zebrafish is meant to be built upon. It just sets up your initial ZSH
 configuration in a way that makes sense so you don't have to do it all.
 
 Just keep in mind that loading other plugins and frameworks _after_ Zebrafish
-means its likely you overrode Zebrafish defaults.
+means it's likely you overrode some of Zebrafish's settings.
 
 ### Compared to just using .zshrc
 
 There's no reason you can't put the contents of Zebrafish directly in your
 .zshrc. But, this project is great for folks that like a clean .zshrc file and
-want a great base to build their .zshrc from.
+want a reasonable base configuration to build their .zshrc from.
 
 ## Customization
 
@@ -137,6 +134,7 @@ Installation methods:
 [oh-my-zsh]:                     https://github.com/robbyrussell/oh-my-zsh
 [prezto]:                        https://github.com/sorin-ionescu/prezto
 [xdg-basedirs]:                  https://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
+[zimfw]:                         https://github.com/zimfw/zimfw
 [zgen]:                          https://github.com/tarjoilija/zgen
 [zsh-autosuggestions]:           https://github.com/zsh-users/zsh-autosuggestions
 [zsh-completions]:               https://github.com/zsh-users/zsh-completions

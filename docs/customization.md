@@ -17,9 +17,9 @@ zstyle ':zebrafish:features' 'disable' \
   'key-bindings' \
   'xdg'
 
-# Additionally, you can also turn off 'zfunctions', 'zplugins', 'zprompts', and
-# 'zshrc.d', but these features are only used if the directories for them exist,
-# so there's rarely a good reason to turn them off unless you are experimenting.
+# Additionally, you can also turn off 'zfunctions' and 'zshrc.d', but these
+# features are only used if the directories for them exist, so there's rarely
+# a good reason to turn them off unless you are experimenting.
 ```
 
 If you want to customize directory locations, use the following:
@@ -27,12 +27,6 @@ If you want to customize directory locations, use the following:
 ```shell
 # to change the default zshrc.d path from $ZDOTDIR/.zshrc.d
 zstyle ':zebrafish:zshrc.d' 'path' ~/.config/zsh/conf.d
-
-# to change the default zprompts path from $ZDOTDIR/.zprompts
-zstyle ':zebrafish:zprompts' 'path' ~/.config/zsh/myprompts
-
-# to change the default zplugins path from $ZDOTDIR/.zplugins
-zstyle ':zebrafish:zplugins' 'path' ~/.config/zsh/myplugins
 
 # to change the default zfunctions path from $ZDOTDIR/.zfunctions
 zstyle ':zebrafish:zfunctions' 'path' ~/.config/zsh/myfunctions
@@ -48,6 +42,10 @@ If you want to see which ZSH options are set, run this:
 
 ```shell
 setopt
+
+# alternatively...
+set -o
+set +o
 ```
 
 If you don't like the option settings that Zebrafish provides, you can always
