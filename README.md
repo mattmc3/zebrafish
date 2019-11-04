@@ -122,7 +122,7 @@ Installation methods:
 - manually with curl:
 
   ```shell
-  curl -s -o ${ZDOTDIR:-$HOME}/.zebrafish.zsh https://raw.githubusercontent.com/mattmc3/zebrafish/master/zebrafish.zsh
+  curl -s -o ${ZDOTDIR:-$HOME}/.zebrafish.zsh https://raw.githubusercontent.com/mattmc3/zebrafish/master/zebrafish.plugin.zsh
   echo ". ${ZDOTDIR:-$HOME}/.zebrafish.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
   ```
 
