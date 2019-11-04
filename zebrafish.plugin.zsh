@@ -21,11 +21,6 @@ zstyle -g _zshrcd_dir ':zebrafish:zshrc.d' 'path'
 [[ -n $_zshrcd_dir ]] || _zshrcd_dir="${ZDOTDIR:-$HOME}"/.zshrc.d
 zstyle -g _zfunctions_dir ':zebrafish:zfunctions' 'path'
 [[ -n $_zfunctions_dir ]] || _zfunctions_dir="${ZDOTDIR:-$HOME}"/.zfunctions
-zstyle -g _zprompts_dir ':zebrafish:zprompts' 'path'
-[[ -n $_zprompts_dir ]] || _zprompts_dir="${ZDOTDIR:-$HOME}"/.zprompts
-zstyle -g _zplugins ':zebrafish:zplugins' 'load'
-zstyle -g _zplugins_dir ':zebrafish:zplugins' 'path'
-[[ -n $_zplugins_dir ]] || _zplugins_dir="${ZDOTDIR:-$HOME}"/.zplugins
 
 #
 ## XDG
@@ -219,61 +214,6 @@ if ! (($_disabled_features[(Ie)compinit])); then
 fi
 
 #
-## .zplugins
-_load_plugin() {
-  local zplugindir=$1
-  local plugin=$2
-  local plugin_name location
-
-  # split on the slash
-  if [[ $plugin = */* ]]; then
-    # get part after slash
-    plugin_name=${plugin#*/}
-  else
-    plugin_name=${plugin}
-  fi
-  location=${zplugindir}/${plugin}/${plugin_name}
-
-  # https://github.com/tarjoilija/zgen/blob/master/zgen.zsh#L346-L374
-  if [[ -f "${location}.zsh" ]]; then
-    source "${location}.zsh"
-  elif [[ -f "${location}.plugin.zsh" ]]; then
-    source  "${location}.plugin.zsh"
-  elif [[ -f "${location}/init.zsh" ]]; then
-    source  "${location}/init.zsh"
-  elif [[ -f "${location}.sh" ]]; then
-    source  "${location}.sh"
-  else
-    echo "${location}"
-    echo "Failed to load plugin: $plugin" >&2
-    return 1
-  fi
-  return 0
-}
-# if plugins are specified, load them in order
-if ! (($_disabled_features[(Ie)zplugins])) && [[ -d "$_zplugins_dir" ]]; then
-  for _zplugin in $_zplugins; do
-    if [[ -f "$plugin" ]]; then
-      source "$plugin"
-    else
-      _load_plugin $_zplugins_dir $_zplugin
-    fi
-  done
-  unset _zplugin
-fi
-
-#
-## .zprompts
-# add any subfolder of .zprompts containing prompt_*_setup to fpath
-if ! (($_disabled_features[(Ie)zprompts])) && [[ -d "$_zprompts_dir" ]]; then
-  for _zdir in "$_zprompts_dir"/**/prompt_*_setup(N:a:h); do
-    fpath=($fpath $_zdir)
-  done
-  unset _zdir
-  autoload -U promptinit; promptinit
-fi
-
-#
 ## .zfunctions
 # auto load any function in the functions location
 if ! (($_disabled_features[(Ie)zfunctions])) && [[ -d "$_zfunctions_dir" ]]; then
@@ -300,7 +240,3 @@ fi
 unset _disabled_features
 unset _zfunctions_dir
 unset _zshrcd_dir
-unset _zprompts_dir
-unset _zplugins_dir
-unset _zplugins
-unfunction _load_plugin
