@@ -1,7 +1,7 @@
 # Copyright (c) 2019 mattmc3
 # MIT license
 # zebrafish.plugin.zsh
-# version: 0.4.1
+# version: 0.4.2
 # homepage: https://github.com/mattmc3/zebrafish
 #
 # A solid base zsh configuration achieved with only one small, simple include.
