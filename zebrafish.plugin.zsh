@@ -1,7 +1,7 @@
 # Copyright (c) 2019 mattmc3
 # MIT license
-# zebrafish.zsh
-# version: 0.4.0
+# zebrafish.plugin.zsh
+# version: 0.4.1
 # homepage: https://github.com/mattmc3/zebrafish
 #
 # A solid base zsh configuration achieved with only one small, simple include.
@@ -156,7 +156,7 @@ if (($_features[(Ie)history])); then
   HISTSIZE="${HISTSIZE:-10000}"
   if [[ -z $HISTFILE ]]; then
     if [[ -d $XDG_DATA_HOME ]]; then
-      HISTFILE="$XDG_DATA_HOME/zsh/zhistory}"
+      HISTFILE="$XDG_DATA_HOME/zsh/zhistory"
       [[ -d "$XDG_DATA_HOME"/zsh ]] || mkdir -p "$XDG_DATA_HOME"/zsh
       [[ -f "${ZDOTDIR:-$HOME}/.zhistory" ]] || ln -sf "$HISTFILE" "${ZDOTDIR:-$HOME}/.zhistory"
     else
