@@ -11,6 +11,8 @@
 
 - [ ] review ZSH options before 1.0 and make sure they are reasonable defaults
 - [ ] review keybindings before 1.0 and make sure they make sense and are all inclusive
+- [ ] consider emacs vs vimode support
+- [ ] consider command correction support
 
 ## version 0.3.0
 
