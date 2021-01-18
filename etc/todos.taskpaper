@@ -1,0 +1,108 @@
+fish commands:
+	See http://fishshell.com/docs/current/commands.html
+	- argparse - parse options passed to a fish script or function
+	- block - temporarily block delivery of events
+	- breakpoint - Launch debug mode
+	- cdh - change to a recently visited directory
+	- commandline - set or get the current command line buffer
+	- complete - edit command specific tab-completions
+	- contains - test if a word is present in a list
+	- count - count the number of elements of a list
+	- dirh - print directory history
+	- emit - Emit a generic event
+	- help - display fish documentation
+	- isatty - test if a file descriptor is a terminal
+	- math - Perform mathematics calculations
+	- nextd - move forward through directory history
+	- prevd - move backward through directory history
+	- prompt_pwd - Print pwd suitable for prompt
+	- psub - perform process substitution
+	- set_color - set the terminal color
+	- status - query fish runtime information
+	- string - manipulate strings
+	- string-collect - join strings into one
+	- string-escape - escape special characters
+	- string-join - join strings with delimiter
+	- string-join0 - join strings with zero bytes
+	- string-length - print string lengths
+	- string-lower - convert strings to lowercase
+	- string-match - match substrings
+	- string-repeat - multiply a string
+	- string-replace - replace substrings
+	- string-split - split strings by delimiter
+	- string-split0 - split on zero bytes
+	- string-sub - extract substrings
+	- string-trim - remove trailing whitespace
+	- string-unescape - expand escape sequences
+	- string-upper - convert strings to uppercase
+
+Archive:
+	- abbr - manage fish abbreviations @alternative-available @done(21-01-18 13:29)
+	- alias - create a function @shell-builtin @done(21-01-18 12:52)
+	- and - conditionally execute a command @function @done(21-01-18 12:52)
+	- begin - start a new block of code @alternative-available @done(21-01-18 13:04)
+	- bg - send jobs to background @shell-builtin @done(21-01-18 13:05)
+	- bind - handle fish key bindings @alternative-available @done(21-01-18 13:25)
+	- break - stop the current inner loop @shell-builtin @done(21-01-18 13:05)
+	- builtin - run a builtin command @shell-builtin @done(21-01-18 13:05)
+	- case - conditionally execute a block of commands @zsh-reserved-word @done(21-01-18 13:05)
+	- cd - change directory @shell-builtin @done(21-01-18 13:05)
+	- command - run a program @shell-builtin @done(21-01-18 13:06)
+	- continue - skip the remainder of the current iteration of the current inner loop @shell-builtin @done(21-01-18 13:06)
+	- dirs - print directory stack @shell-builtin @done(21-01-18 13:06)
+	- disown - remove a process from the list of jobs @shell-builtin @done(21-01-18 13:06)
+	- echo - display a line of text @shell-builtin @done(21-01-18 12:52)
+	- else - execute command if a condition is not met @zsh-reserved-word @done(21-01-18 12:53)
+	- end - end a block of commands. @zsh-reserved-word @done(21-01-18 12:53)
+	- eval - evaluate the specified commands @shell-builtin @done(21-01-18 12:53)
+	- exec - execute command in current process @shell-builtin @done(21-01-18 13:15)
+	- exit - exit the shell @shell-builtin @done(21-01-18 12:53)
+	- false - return an unsuccessful result @shell-builtin @done(21-01-18 12:53)
+	- fg - bring job to foreground @shell-builtin @done(21-01-18 12:53)
+	- fish - the friendly interactive shell @fish-specific @done(21-01-18 12:54)
+	- fish_breakpoint_prompt - define the prompt when stopped at a breakpoint @fish-specific @done(21-01-18 13:23)
+	- fish_config - start the web-based configuration interface @fish-specific @done(21-01-18 13:23)
+	- fish_git_prompt - output git information for use in a prompt @fish-specific @done(21-01-18 13:23)
+	- fish_hg_prompt - output Mercurial information for use in a prompt @fish-specific @done(21-01-18 13:23)
+	- fish_indent - indenter and prettifier @fish-specific @done(21-01-18 13:23)
+	- fish_key_reader - explore what characters keyboard keys send @fish-specific @done(21-01-18 13:23)
+	- fish_mode_prompt - define the appearance of the mode indicator @fish-specific @done(21-01-18 13:23)
+	- fish_opt - create an option spec for the argparse command @fish-specific @done(21-01-18 13:23)
+	- fish_prompt - define the appearance of the command line prompt @fish-specific @done(21-01-18 13:23)
+	- fish_right_prompt - define the appearance of the right-side command line prompt @fish-specific @done(21-01-18 13:23)
+	- fish_svn_prompt - output Subversion information for use in a prompt @fish-specific @done(21-01-18 13:23)
+	- fish_update_completions - Update completions using manual pages @fish-specific @done(21-01-18 13:23)
+	- fish_vcs_prompt - output version control system information for use in a prompt @fish-specific @done(21-01-18 13:23)
+	- for - perform a set of commands multiple times. @zsh-reserved-word @done(21-01-18 13:08)
+	- funced - edit a function interactively @function @done(21-01-18 12:51)
+	- funcsave - save the definition of a function to the user's autoload directory @function @done(21-01-18 12:51)
+	- function - create a function @zsh-reserved-word @done(21-01-18 13:08)
+	- functions - print or erase functions @shell-builtin @done(21-01-18 13:10)
+	- history - Show and manipulate command history @shell-builtin @done(21-01-18 13:10)
+	- if - conditionally execute a command @zsh-reserved-word @done(21-01-18 13:08)
+	- jobs - print currently running jobs @shell-builtin @done(21-01-18 13:15)
+	- open - open file in its default application @binary-available @done(21-01-18 13:23)
+	- or - conditionally execute a command @function @done(21-01-18 12:52)
+	- popd - move through directory stack @shell-builtin @done(21-01-18 13:15)
+	- printf - display text according to a format string @shell-builtin @done(21-01-18 13:15)
+	- pushd - push directory to directory stack @shell-builtin @done(21-01-18 13:16)
+	- pwd - output the current working directory @shell-builtin @done(21-01-18 12:56)
+	- read - read line of input into variables @shell-builtin @done(21-01-18 12:56)
+	- realpath - Convert a path to an absolute path without symlinks @alternative-available @done(21-01-18 13:29)
+	- return - stop the current inner function @shell-builtin @done(21-01-18 12:57)
+	- set - display and change shell variables. @shell-builtin @done(21-01-18 12:58)
+	- source - evaluate contents of file. @shell-builtin @done(21-01-18 12:58)
+	- suspend - suspend the current shell @shell-builtin @done(21-01-18 13:16)
+	- switch - conditionally execute a block of commands @shell-builtin @done(21-01-18 12:58)
+	- test - perform tests on files and text @shell-builtin @done(21-01-18 12:58)
+	- time - measure how long a command or block takes @zsh-reserved-word @done(21-01-18 13:08)
+	- trap - perform an action when the shell receives a signal @shell-builtin @done(21-01-18 13:16)
+	- true - return a successful result @shell-builtin @done(21-01-18 12:58)
+	- type - indicate how a command would be interpreted @shell-builtin @done(21-01-18 12:58)
+	- ulimit - set or get resource usage limits @shell-builtin @done(21-01-18 13:16)
+	- umask - set or get the file creation mode mask @shell-builtin @done(21-01-18 12:58)
+	- vared - interactively edit the value of an environment variable @shell-builtin @done(21-01-18 13:16)
+	- wait - wait for jobs to complete @shell-builtin @done(21-01-18 12:59)
+	- while - perform a command multiple times @zsh-reserved-word @done(21-01-18 12:59)
+  	- not - negate the exit status of a job @function @done(21-01-18 13:41)
+  	- random - generate random number @function @done(21-01-18 13:41)
