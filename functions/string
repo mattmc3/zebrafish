@@ -1,0 +1,70 @@
+function _string_help() {
+  local usage
+  usage=$(<<'EOS'
+string - manipulate strings
+
+   string length [(-q | --quiet)] [STRING...]
+   string lower [(-q | --quiet)] [STRING...]
+   string upper [(-q | --quiet)] [STRING...]
+EOS
+)
+  echo $usage
+  return
+}
+
+function _string_length() {
+  local flag_quiet=false
+  if [[ "$1" = "-q" ]] || [[ "$1" = "--quiet" ]]; then
+    flag_quiet=true
+    shift
+  fi
+  local exitcode=1
+  local s result
+  for s in "$@"; do
+    result="${#s}"
+    [[ $result -ne 0 ]] && exitcode=0
+    [[ $flag_quiet = "false" ]] && echo "$result"
+  done
+  return $exitcode
+}
+
+function __string_changecase() {
+  local stringcase="$1"; shift
+  local flag_quiet=false
+  if [[ "$1" = "-q" ]] || [[ "$1" = "--quiet" ]]; then
+    flag_quiet=true
+    shift
+  fi
+  local exitcode=1
+  local s result
+  for s in "$@"; do
+    [[ "$stringcase" = "l" ]] && result="${s:l}" || result="${s:u}"
+    [[ "$result" != "$s" ]] && exitcode=0
+    [[ $flag_quiet = "false" ]] && echo "$result"
+  done
+  return $exitcode
+}
+
+function _string_lower() {
+  __string_changecase "l" "$@"
+  return $?
+}
+
+function _string_upper() {
+  __string_changecase "u" "$@"
+  return $?
+}
+
+local cmd="$1"
+local REPLY
+if [[ "$1" = "-h" ]] || [[ "$1" = "--help" ]]; then
+  _string_help
+elif (( $+functions[_string_${cmd}] )); then
+  shift
+  _string_${cmd} "$@"
+  return $?
+elif [[ -z $cmd ]]; then
+  _string_help && return
+else
+  echo >&2 "string: subcommand '${cmd}' is not valid" && return 2
+fi
