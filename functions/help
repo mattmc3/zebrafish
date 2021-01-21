@@ -1,0 +1,167 @@
+ZSH_DOCS=${ZSH_DOCS:-'http://zsh.sourceforge.net/Doc/Release'}
+
+function __set_help_terms() {
+  local page="$1"; shift
+  local kw kwscrub
+  for kw in $@; do
+    kwscrub=${kw:l:gs/_/}
+    _zf_help_pages[$kwscrub]=$page
+  done
+}
+
+function __set_options_help_terms() {
+  local page="$1"; shift
+  local expanded_keywords=($@)
+  expanded_keywords+=(no${^@})
+  __set_help_terms $page $expanded_keywords
+}
+
+function __set_zf_help_pages() {
+  typeset -gA _zf_help_pages
+  __set_zf_help_pages=
+
+  ### 6 Shell Grammar
+  #region
+  # 6.2 Precommand Modifiers
+  __set_options_help_terms "Shell-Grammar.html#Precommand-Modifiers" \
+    "-" builtin command exec nocorrect noglob
+
+  # 6.3 Complex Commands
+  __set_options_help_terms "Shell-Grammar.html#Complex-Commands" \
+    if for while until repeat case select time
+  #endregion
+
+  ### 9 Functions
+  #region
+  __set_options_help_terms "Functions.html" \
+    function autoload
+
+  # 9.3.1 Hook Functions
+  __set_options_help_terms "Functions.html#Hook-Functions" \
+    chpwd periodic precmd preexec zshaddhistory zshexit
+
+  # 9.3.2 Trap Functions
+  __set_options_help_terms "Functions.html#Trap-Functions" \
+    trap trapdebug trapexit trapzerr
+
+  #endregion
+
+  ### 10 Jobs & Signals
+  #region
+  __set_help_terms "Jobs-_0026-Signals.html#Jobs" jobs fg bg wait
+  __set_help_terms "Jobs-_0026-Signals.html#Signals" signals
+  #endregion
+
+  ### 16 Options
+  #region
+  # 16.2
+  __set_options_help_terms "Options.html" zshoptions setopt unsetopt set
+
+  # 16.2.1 Changing Directories
+  __set_options_help_terms "Options.html#Changing-Directories" \
+    auto_cd auto_pushd cdable_vars cd_silent chase_dots chase_links posix_cd \
+    pushd_ignore_dups pushd_minus pushd_silent pushd_to_home
+
+  # 16.2.2 Completion
+  __set_options_help_terms "Options.html#Completion-4" \
+    always_last_prompt always_to_end auto_list auto_menu auto_name_dirs \
+    auto_param_keys auto_param_slash auto_remove_slash bash_auto_list \
+    complete_aliases complete_in_word glob_complete hash_list_all list_ambiguous \
+    list_beep list_packed list_rows_first list_types menu_complete rec_exact
+
+  # 16.2.3 Expansion and Globbing
+  __set_options_help_terms "Options.html#Expansion-and-Globbing" \
+    bad_pattern bare_glob_qual brace_ccl case_glob case_match csh_null_glob \
+    equals extended_glob force_float glob glob_assign glob_dots glob_star_short \
+    glob_subst hist_subst_pattern ignore_braces ignore_close_braces ksh_glob \
+    magic_equal_subst mark_dirs multibyte nomatch null_glob numeric_glob_sort \
+    rc_expand_param rematch_pcre sh_glob unset warn_create_global warn_nested_var
+
+  # 16.2.4 History
+  __set_options_help_terms "Options.html#History" \
+    append_history bang_hist extended_history hist_allow_clobber hist_beep \
+    hist_expire_dups_first hist_fcntl_lock hist_find_no_dups hist_ignore_all_dups \
+    hist_ignore_dups hist_ignore_space hist_lex_words hist_no_functions \
+    hist_no_store hist_reduce_blanks hist_save_by_copy hist_save_no_dups \
+    hist_verify inc_append_history inc_append_history_time share_history
+
+  # 16.2.5 Initialisation
+  __set_options_help_terms "Options.html#Initialisation" \
+    all_export global_export global_rcs rcs
+
+  # 16.2.6 Input/Output
+  __set_options_help_terms "Options.html#Input_002fOutput" \
+    aliases clobber correct correct_all dvorak flow_control ignore_eof \
+    interactive_comments hash_cmds hash_dirs hash_executables_only mail_warning \
+    path_dirs path_script print_eight_bit print_exit_value rc_quotes \
+    rm_star_silent rm_star_wait short_loops sun_keyboard_hack
+
+  # 16.2.7 Job Control
+  __set_options_help_terms "Options.html#Job-Control" \
+    auto_continue auto_resume bg_nice check_jobs check_running_jobs hup \
+    long_list_jobs monitor notify posix_jobs
+
+  # 16.2.8 Prompting
+  __set_options_help_terms "Options.html#Prompting" \
+    prompt_bang prompt_cr prompt_sp prompt_percent prompt_subst transient_rprompt
+
+  # 16.2.9 Scripts and Functions
+  __set_options_help_terms "Options.html#Scripts-and-Functions" \
+    alias_func_def c_bases c_precedences debug_before_cmd err_exit err_return \
+    eval_lineno function_argzero local_loops local_options local_patterns \
+    local_traps multi_func_def multios octal_zeroes pipe_fail source_trace \
+    typeset_silent verbose xtrace
+
+  # 16.2.10 Shell Emulation
+  __set_options_help_terms "Options.html#Shell-Emulation" \
+    append_create bash_rematch bsd_echo continue_on_error csh_junkie_history \
+    csh_junkie_loops csh_junkie_quotes csh_nullcmd ksh_arrays ksh_autoload \
+    ksh_option_print ksh_typeset ksh_zero_subscript posix_aliases posix_argzero \
+    posix_builtins posix_identifiers posix_strings posix_traps sh_file_expansion \
+    sh_nullcmd sh_option_letters sh_word_split traps_async
+
+  # 16.2.11 Shell State
+  __set_options_help_terms "Options.html#Shell-State" \
+    interactive login privileged restricted shin_stdin single_command
+
+  # 16.2.12 Zle
+  __set_options_help_terms "Options.html#Zle" \
+    beep combining_chars emacs overstrike single_line_zle vi zle
+
+  # 16.3 Option Aliases
+  __set_options_help_terms "Options.html#Option-Aliases" \
+    brace_expand dot_glob hash_all hist_append hist_expand log mail_warn \
+    one_cmd physical prompt_vars stdin track_all
+
+  #endregion
+
+  ### 22 Modules
+  #region
+  # 22.2 The zsh/attr Module
+  __set_options_help_terms "Zsh-Modules.html#The-zsh_002fattr-Module" \
+    zgetattr zsetattr zdelattr zlistattr
+
+  #endregion
+}
+
+if [[ "${(t)_zf_help_pages}" != "association" ]] || [[ ${#_zf_help_pages} -eq 0 ]]; then
+  __set_zf_help_pages
+fi
+
+if [[ "$1" = "-l" ]]; then
+  # list all search terms
+  local kw keywords
+  __set_zf_help_pages
+  keywords=(${(k)_zf_help_pages})
+  for kw in ${(o)keywords}; do
+    printf "%-25s : %s\n" ${kw} ${_zf_help_pages[$kw]}
+  done
+  return
+fi
+
+local searchterm="${@:l}"
+if (( $+_zf_help_pages[$searchterm] )); then
+  ${BROWSER:-open} "$ZSH_DOCS/$_zf_help_pages[$searchterm]"
+else
+  ${BROWSER:-open} "$ZSH_DOCS"
+fi
