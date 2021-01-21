@@ -9,7 +9,9 @@
   local basedir="${${(%):-%x}:a:h}"
   local funcdir="$basedir/functions"
   fpath+="$funcdir"
-  local fn; for fn in "$funcdir"/*(.N); do
-    autoload -Uz "$fn"
+  local fnfile; for fnfile in "$funcdir"/*(.N); do
+    local fnname="${fnfile:t}"
+    (( $+functions[$fnname] )) && unfunction "$fnname"
+    autoload -Uz "$fnfile"
   done
 }
