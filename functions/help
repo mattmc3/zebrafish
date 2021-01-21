@@ -1,10 +1,20 @@
 ZSH_DOCS=${ZSH_DOCS:-'http://zsh.sourceforge.net/Doc/Release'}
 
+function __scrub_keyword() {
+  # lowercase, scrub anything non-alphanumeric
+  #REPLY=$(echo "${@:l}" | sed "s/[^[:alnum:]]-//g")
+
+  # lowercase, scrub underscores, spaces
+  REPLY=${@:l:gs/_/}
+  REPLY=${REPLY:gs/ /}
+  echo $REPLY
+}
+
 function __set_help_terms() {
   local page="$1"; shift
   local kw kwscrub
   for kw in $@; do
-    kwscrub=${kw:l:gs/_/}
+    kwscrub=$(__scrub_keyword "$kw")
     _zf_help_pages[$kwscrub]=$page
   done
 }
@@ -20,39 +30,122 @@ function __set_zf_help_pages() {
   typeset -gA _zf_help_pages
   __set_zf_help_pages=
 
-  ### 6 Shell Grammar
+  ### 2 Introduction ###
+  #region
+  __set_help_terms "Introduction.html" introduction
+
+  # 2.1 Author
+  __set_help_terms "Introduction.html#Author" author
+
+  # 2.2 Availability
+  __set_help_terms "Introduction.html#Availability" availability
+
+  # 2.3 Mailing Lists
+  __set_help_terms "Introduction.html#Mailing-Lists" mailing_list mailing_lists
+
+  # 2.4 The Zsh FAQ
+  __set_help_terms "Introduction.html#The-Zsh-FAQ" faq
+
+  # 2.5 The Zsh Web Page
+  __set_help_terms "Introduction.html#The-Zsh-Web-Page" webpage homepage
+
+  # 2.6 The Zsh Userguide
+  __set_help_terms "Introduction.html#The-Zsh-Userguide" userguide
+
+  # 2.7 See Also
+  __set_help_terms "Introduction.html#See-Also" seealso
+  #endregion
+
+  ### 3 Roadmap ###
+  #region
+  __set_help_terms "Roadmap.html" roadmap
+  #endregion
+
+  ### 4 Invocation ###
+  #region
+  __set_help_terms "Invocation.html" invocation
+  #endregion
+
+  ### 5 Files ###
+  #region
+  __set_help_terms "Files.html" files
+
+  # 5.1 Startup/Shutdown Files
+  __set_help_terms "Files.html#Startup_002fShutdown-Files" startup shutdown zdotdir
+
+  # 5.2 Files
+  __set_help_terms "Files.html#Files-2" \
+    zshenv zprofile zshrc zlogin zlogout \
+    .zshenv .zprofile .zshrc .zlogin .zlogout
+
+  #endregion
+
+  ### 6 Shell Grammar ###
   #region
   # 6.2 Precommand Modifiers
-  __set_options_help_terms "Shell-Grammar.html#Precommand-Modifiers" \
+  __set_help_terms "Shell-Grammar.html#Precommand-Modifiers" \
     "-" builtin command exec nocorrect noglob
 
   # 6.3 Complex Commands
-  __set_options_help_terms "Shell-Grammar.html#Complex-Commands" \
-    if for while until repeat case select time
+  __set_help_terms "Shell-Grammar.html#Complex-Commands" \
+    complex_commands if for while until repeat case select time
+
+  # 6.5 Reserved Words
+  __set_help_terms "Shell-Grammar.html#Reserved-Words" reserved reserved_words
+
+  # 6.6 Errors
+  __set_help_terms "Shell-Grammar.html#Errors" errors
+
+  # 6.7 Comments
+  __set_help_terms "Shell-Grammar.html#Comments" comments
+
+  # 6.8 Aliasing
+  __set_help_terms "Shell-Grammar.html#Aliasing" aliasing
+
+  # 6.9 Quoting
+  __set_help_terms "Shell-Grammar.html#Quoting" quoting
   #endregion
 
-  ### 9 Functions
+  ### 7 Redirection ###
   #region
-  __set_options_help_terms "Functions.html" \
+  __set_help_terms "Redirection.html" redirection \
+    "<" "<>" ">" ">|" ">!" ">>" ">>|" ">>!" "<<-" "<<<" \
+    "<&" ">&" "<&1" ">&2" "<&2" ">&2" \
+    ">&|" ">&!" "&>|" "&>!" \
+    ">>&" "&>>" ">>&|" ">>&!" "&>>|" "&>>!" \
+    "2>&1" "1>&2" ">&2" ">&"
+
+  # 7.2 Multios
+  __set_help_terms "Redirection.html#Multios" multios
+  #endregion
+
+  ### 8 Command Execution ###
+  #region
+  __set_help_terms "Command-Execution.html" command_execution
+  #endregion
+
+  ### 9 Functions ###
+  #region
+  __set_help_terms "Functions.html" \
     function autoload
 
   # 9.3.1 Hook Functions
-  __set_options_help_terms "Functions.html#Hook-Functions" \
+  __set_help_terms "Functions.html#Hook-Functions" \
     chpwd periodic precmd preexec zshaddhistory zshexit
 
   # 9.3.2 Trap Functions
-  __set_options_help_terms "Functions.html#Trap-Functions" \
+  __set_help_terms "Functions.html#Trap-Functions" \
     trap trapdebug trapexit trapzerr
 
   #endregion
 
-  ### 10 Jobs & Signals
+  ### 10 Jobs & Signals ###
   #region
   __set_help_terms "Jobs-_0026-Signals.html#Jobs" jobs fg bg wait
   __set_help_terms "Jobs-_0026-Signals.html#Signals" signals
   #endregion
 
-  ### 16 Options
+  ### 16 Options ###
   #region
   # 16.2
   __set_options_help_terms "Options.html" zshoptions setopt unsetopt set
@@ -135,33 +228,37 @@ function __set_zf_help_pages() {
 
   #endregion
 
-  ### 22 Modules
+  ### 22 Modules  ###
   #region
   # 22.2 The zsh/attr Module
-  __set_options_help_terms "Zsh-Modules.html#The-zsh_002fattr-Module" \
+  __set_help_terms "Zsh-Modules.html#The-zsh_002fattr-Module" \
     zgetattr zsetattr zdelattr zlistattr
 
   #endregion
 }
 
-if [[ "${(t)_zf_help_pages}" != "association" ]] || [[ ${#_zf_help_pages} -eq 0 ]]; then
-  __set_zf_help_pages
-fi
+function _help() {
+  local REPLY
+  if [[ "${(t)_zf_help_pages}" != "association" ]] || [[ ${#_zf_help_pages} -eq 0 ]]; then
+    __set_zf_help_pages
+  fi
 
-if [[ "$1" = "-l" ]]; then
-  # list all search terms
-  local kw keywords
-  __set_zf_help_pages
-  keywords=(${(k)_zf_help_pages})
-  for kw in ${(o)keywords}; do
-    printf "%-25s : %s\n" ${kw} ${_zf_help_pages[$kw]}
-  done
-  return
-fi
+  if [[ "$1" = "-l" ]]; then
+    # list all search terms
+    local kw keywords
+    __set_zf_help_pages
+    keywords=(${(k)_zf_help_pages})
+    for kw in ${(o)keywords}; do
+      printf "%-25s : %s\n" ${kw} ${_zf_help_pages[$kw]}
+    done
+    return
+  fi
 
-local searchterm="${@:l}"
-if (( $+_zf_help_pages[$searchterm] )); then
-  ${BROWSER:-open} "$ZSH_DOCS/$_zf_help_pages[$searchterm]"
-else
-  ${BROWSER:-open} "$ZSH_DOCS"
-fi
+  local searchterm="$(__scrub_keyword $@)"
+  if (( $+_zf_help_pages[$searchterm] )); then
+    ${BROWSER:-open} "$ZSH_DOCS/$_zf_help_pages[$searchterm]"
+  else
+    ${BROWSER:-open} "$ZSH_DOCS"
+  fi
+}
+_help "$@"
